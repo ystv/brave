@@ -1,14 +1,15 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -yq \
     build-essential \
     gcc \
     git \ 
-    libffi6 libffi-dev \
+    libffi7 libffi-dev \
     gobject-introspection \
     gstreamer1.0-libav \
     gstreamer1.0-nice \
@@ -28,7 +29,20 @@ RUN apt-get update && \
     python3-gi \
     python3-websockets \
     python3-psutil \
-    python3-uvloop
+    python3-uvloop \
+    libtiff5-dev \
+    libjpeg8-dev \
+    libopenjp2-7-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    tcl8.6-dev \
+    tk8.6-dev \
+    python3-tk \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libxcb1-dev
 
 RUN git clone --depth 1 https://github.com/bbc/brave.git && \
     cd brave && \
