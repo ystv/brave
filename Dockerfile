@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+COPY . /brave
+
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,6 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get install -yq \
     build-essential \
+    cmake \
     gcc \
     git \ 
     libffi7 libffi-dev \
@@ -18,6 +21,8 @@ RUN apt-get update && \
     gstreamer1.0-plugins-bad \
     gstreamer1.0-plugins-ugly \
     gstreamer1.0-tools \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
     gir1.2-gst-plugins-bad-1.0 \ 
     libcairo2-dev \
     libgirepository1.0-dev \
@@ -44,11 +49,15 @@ RUN apt-get update && \
     libfribidi-dev \
     libxcb1-dev
 
-RUN git clone --depth 1 https://github.com/bbc/brave.git && \
-    cd brave && \
+RUN cd brave && \
     pip3 install pipenv sanic && \
     pipenv install --ignore-pipfile && \
     mkdir -p /usr/local/share/brave/output_images/
+
+RUN cd brave/gst-WebRenderSrc && \
+    mkdir build && cd build && \
+    cmake .. && \
+    make && make install
 
 EXPOSE 5000
 WORKDIR /brave
