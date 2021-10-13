@@ -57,6 +57,7 @@ DownloadCEF("${CEF_PLATFORM}" "${CEF_VERSION}" "${CMAKE_SOURCE_DIR}/third_party/
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CEF_ROOT}/cmake")
 
 # Load the CEF configuration (executes FindCEF.cmake).
+set(CEF_CXX_COMPILER_FLAGS "-Wno-attributes")
 find_package(CEF REQUIRED)
 
 # find GStreamer packages
