@@ -47,7 +47,10 @@ RUN apt-get update && \
     python3-tk \
     libharfbuzz-dev \
     libfribidi-dev \
-    libxcb1-dev
+    libxcb1-dev \
+    libnss3-dev \
+    libnspr4-dev \
+    libatk1.0-dev
 
 RUN cd brave && \
     pip3 install pipenv sanic && \
