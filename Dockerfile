@@ -52,15 +52,15 @@ RUN apt-get update && \
     libnspr4-dev \
     libatk1.0-dev
 
-RUN cd brave && \
-    pip3 install pipenv sanic && \
-    pipenv install --ignore-pipfile && \
-    mkdir -p /usr/local/share/brave/output_images/
-
 RUN cd brave/gst-WebRenderSrc && \
     mkdir build && cd build && \
     cmake .. && \
     make && make install
+
+RUN cd brave && \
+    pip3 install pipenv sanic && \
+    pipenv install --ignore-pipfile && \
+    mkdir -p /usr/local/share/brave/output_images/
 
 EXPOSE 5000
 WORKDIR /brave
