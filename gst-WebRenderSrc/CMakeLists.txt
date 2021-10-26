@@ -53,8 +53,21 @@ include(DownloadCEF)
 include(FindPkgConfig)
 DownloadCEF("${CEF_PLATFORM}" "${CEF_VERSION}" "${CMAKE_SOURCE_DIR}/third_party/cef")
 install(
-  FILES "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/libcef.so"
+  DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/"
   TYPE LIB
+  CONFIGURATIONS Debug Release
+  FILES_MATCHING PATTERN "*.so"
+  PATTERN "swiftshader/*" EXCLUDE
+)
+install(
+  DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/"
+  DESTINATION "${CMAKE_INSTALL_BINDIR}"
+  CONFIGURATIONS Debug Release
+  FILES_MATCHING PATTERN "*.bin" PATTERN "chrome-sandbox" PATTERN "swiftshader/*"
+)
+install(
+  DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/Resources/"
+  DESTINATION "${CMAKE_INSTALL_BINDIR}"
   CONFIGURATIONS Debug Release
 )
 
