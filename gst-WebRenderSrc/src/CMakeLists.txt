@@ -34,7 +34,6 @@ target_link_libraries(webrendersrc
     libcef_lib
     libcef_dll_wrapper
     ${CEF_STANDARD_LIBS}
-    ${CEF_BINARY_DIR}
 )
 
 target_link_libraries(cefsubprocess
