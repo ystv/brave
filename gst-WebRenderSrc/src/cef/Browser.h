@@ -60,8 +60,6 @@ public:
 
 private:
     bool inited;
-     // Specify CEF global settings here.
-    CefSettings settings;
 
     void *webRenderSrc;
     void (* push_frame)(void *webRenderSrc, const void *buffer, int width, int height);

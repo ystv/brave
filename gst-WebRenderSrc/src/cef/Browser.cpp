@@ -46,6 +46,8 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
         // The sub-process has completed so return here.
         return exit_code;
 
+    CefSettings settings;
+
     //Enable remote debugging
     settings.remote_debugging_port=2012;
     
