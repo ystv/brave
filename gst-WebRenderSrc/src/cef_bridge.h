@@ -18,6 +18,7 @@ struct cef_interface
     char *url;
     int width;
     int height;
+    int framerate;
 };
 
 void new_browser_instance(gpointer args);

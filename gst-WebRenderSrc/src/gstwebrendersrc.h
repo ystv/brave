@@ -75,6 +75,7 @@ struct _GstWebRenderSrc
     const gchar *url;
     int width;
     int height;
+    int framerate;
 
     //Thread references
     GThread *active_thread;

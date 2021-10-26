@@ -64,12 +64,14 @@ enum
   PROP_0,
   PROP_URL,
   PROP_WIDTH,
-  PROP_HEIGHT
+  PROP_HEIGHT,
+  PROP_FRAMERATE
 };
 
 #define DEFAULT_URL     "http://www.bbc.co.uk"
 #define DEFAULT_WIDTH      1280
 #define DEFAULT_HEIGHT     720
+#define DEFAULT_FRAMERATE  30
 
 static GstStaticPadTemplate src_factory = GST_STATIC_PAD_TEMPLATE ("src",
     GST_PAD_SRC,
@@ -115,6 +117,7 @@ static void gst_web_render_src_class_init (GstWebRenderSrcClass * klass)
     g_object_class_install_property(gobject_class, PROP_URL, g_param_spec_string("url", "url", "website to render into video", DEFAULT_URL, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
     g_object_class_install_property(gobject_class, PROP_WIDTH, g_param_spec_uint("width", "width", "width of the internal chrome render", 0, G_MAXUINT, DEFAULT_WIDTH, G_PARAM_READWRITE));
     g_object_class_install_property(gobject_class, PROP_HEIGHT, g_param_spec_uint("height", "height", "height of the internal chrome render", 0, G_MAXUINT, DEFAULT_WIDTH, G_PARAM_READWRITE));
+    g_object_class_install_property(gobject_class, PROP_FRAMERATE, g_param_spec_uint("framerate", "framerate", "framerate of the internal chrome render", 1, 60, DEFAULT_FRAMERATE, G_PARAM_READWRITE));
 
     gst_element_class_add_pad_template (gstelement_class, gst_static_pad_template_get (&src_factory));
     gst_element_class_set_details_simple(gstelement_class, "WebRenderSrc", "CEF BASED gstreamer video src", "Renders a HTML as a video Src", "silver@bbc.co.uk");
@@ -127,6 +130,7 @@ static void gst_web_render_src_init (GstWebRenderSrc * render)
     render->url         = DEFAULT_URL;
     render->width       = DEFAULT_WIDTH;
     render->height      = DEFAULT_HEIGHT;
+    render->framerate   = DEFAULT_FRAMERATE;
 
     render->frames = g_async_queue_new_full ((GDestroyNotify) gst_buffer_unref);
 
@@ -152,6 +156,10 @@ static void set_property (GObject * object, guint prop_id, const GValue * value,
             render->height = g_value_get_uint(value);
         break;
 
+        case PROP_FRAMERATE:
+            render->framerate = g_value_get_uint(value);
+        break;
+
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -171,9 +179,13 @@ static void get_property (GObject * object, guint prop_id, GValue * value, GPara
             g_value_set_uint(value, render->width);
             break;
 
-         case PROP_HEIGHT:
+        case PROP_HEIGHT:
             g_value_set_uint(value, render->height);
             break;
+
+        case PROP_FRAMERATE:
+            g_value_set_uint(value, render->framerate);
+        break;
 
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -191,7 +203,7 @@ static GstCaps * get_caps(GstBaseSrc *src, GstCaps *filter)
 
     caps = gst_caps_new_simple("video/x-raw",
                                 "format", G_TYPE_STRING, "BGRA",
-                                "framerate", GST_TYPE_FRACTION, 30, 1,
+                                "framerate", GST_TYPE_FRACTION, render->framerate, 1,
                                 "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
                                 "width", G_TYPE_INT, render->width,
                                 "height", G_TYPE_INT, render->height,
@@ -244,6 +256,7 @@ static gboolean start(GstBaseSrc *src)
     ci->url = g_strdup(render->url);
     ci->width = render->width;
     ci->height = render->height;
+    ci->framerate = render->framerate;
     ci->push_frame = push_frame;
 
     render->n_frames = 0;

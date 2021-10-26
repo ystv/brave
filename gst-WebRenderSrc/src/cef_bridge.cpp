@@ -17,7 +17,7 @@ void new_browser_instance(gpointer args)
 
     g_atomic_int_set(&message_loop_running, 1);
 
-    browser.CreateFrame(cb->url, cb->width, cb->height);
+    browser.CreateFrame(cb->url, cb->width, cb->height, cb->framerate);
 }
 
 void end_browser_instance()

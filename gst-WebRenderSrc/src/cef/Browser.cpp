@@ -119,7 +119,7 @@ int Browser::End()
     return 0;
 }
 
-int Browser::CreateFrame(std::string url, int width, int height)
+int Browser::CreateFrame(std::string url, int width, int height, int framerate)
 {
     // Information about the window that will be created including parenting, size, etc.
     CefWindowInfo info;
@@ -136,8 +136,8 @@ int Browser::CreateFrame(std::string url, int width, int height)
     // Specify CEF browser settings here.
     CefBrowserSettings browser_settings;
 
-    //Set the refresh rate to 30fps
-    browser_settings.windowless_frame_rate = 30;
+    //Set the refresh rate to the current one
+    browser_settings.windowless_frame_rate = framerate;
     
     // Create the first browser window.
     CefBrowserHost::CreateBrowserSync(info, handler.get(), url, browser_settings, CefRefPtr<CefDictionaryValue>(), nullptr);

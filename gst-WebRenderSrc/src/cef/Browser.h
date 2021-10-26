@@ -40,7 +40,7 @@ private:
 public:
     int Init(void *webRenderSrc, void* push_frame);
     void Run();
-    int CreateFrame(std::string url, int width, int height);
+    int CreateFrame(std::string url, int width, int height, int framerate);
     int End();
     virtual ~Browser();
 
