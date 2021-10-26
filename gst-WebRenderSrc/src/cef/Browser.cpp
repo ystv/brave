@@ -30,6 +30,10 @@ Browser::~Browser()
 *************************/
 int Browser::Init(void *webRenderSrc, void *push_frame)
 {
+    //Check not already inited
+    if (inited)
+        return -1000;
+
     CefMainArgs main_args;
     CefRefPtr<Browser> app(this);
 
@@ -40,10 +44,6 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
 
     if (exit_code >= 0) 
         // The sub-process has completed so return here.
-        return exit_code;
-
-    //Check not already inited
-    if (inited)
         return exit_code;
 
     //Enable remote debugging
@@ -61,7 +61,7 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
     // subprocess a different place to be executed from this stops cef
     // calling this file to runder the renders
     ///
-    CefString(&settings.browser_subprocess_path).FromASCII("cefsubprocess");
+    CefString(&settings.browser_subprocess_path).FromASCII("/usr/bin/cefsubprocess");
 
     #if defined(OS_MACOSX)
     CefString(&settings.framework_dir_path).FromASCII("/usr/local/Frameworks/Chromium Embedded Framework.framework");
@@ -121,14 +121,15 @@ int Browser::CreateFrame(std::string url, int width, int height)
 {
     // Information about the window that will be created including parenting, size, etc.
     CefWindowInfo info;
-    
-    info.width = width;
-    info.height = height;
 
     info.windowless_rendering_enabled = true;
+    info.SetAsWindowless(0);
     
      // Client implements browser-level callbacks and RenderHandler
-    CefRefPtr<Client> handler(new Client(this));
+    Client::GetRectCallback rectCb = [width, height](CefRect& rect) {
+        rect.Set(0, 0, width, height);
+    };
+    CefRefPtr<Client> handler(new Client(this, rectCb));
 
     // Specify CEF browser settings here.
     CefBrowserSettings browser_settings;
@@ -137,7 +138,7 @@ int Browser::CreateFrame(std::string url, int width, int height)
     browser_settings.windowless_frame_rate = 30;
     
     // Create the first browser window.
-    CefBrowserHost::CreateBrowserSync(info, handler.get(), url, browser_settings, NULL);
+    CefBrowserHost::CreateBrowserSync(info, handler.get(), url, browser_settings, CefRefPtr<CefDictionaryValue>(), nullptr);
     GST_INFO("CefBrowserHost::CreateBrowserSync");
 
     return 0;
@@ -146,13 +147,6 @@ int Browser::CreateFrame(std::string url, int width, int height)
 void Browser::OnPaint(CefRenderHandler::PaintElementType type, const CefRenderHandler::RectList& rects, const void* buffer, int width, int height)
 {
     push_frame(webRenderSrc, buffer, width, height);
-}
-
-bool Browser::GetViewRect(CefRect& rect)
-{
-    GST_INFO("Browser::GetViewRect");
-    rect.Set(0, 0, 1280, 720);
-    return true;
 }
 
 /*Off-Screen Rendering

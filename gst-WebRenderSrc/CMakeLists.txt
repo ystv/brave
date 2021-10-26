@@ -17,7 +17,7 @@ set_property(GLOBAL PROPERTY OS_FOLDERS ON)
 set(GST_INSTALL_BASE "${CMAKE_SOURCE_DIR}/third_party" CACHE INTERNAL "Path to the GStreamer install base")
 
 # Specify the CEF distribution version.
-set(CEF_VERSION "3.3497.1836.gb472a8d")
+set(CEF_VERSION "95.7.12+g99c4ac0+chromium-95.0.4638.54")
 
 #Need a build of Gstreamer with WebRTC fixes
 set(GST_REQUIRED 1.14.3)
@@ -53,21 +53,25 @@ include(DownloadCEF)
 include(FindPkgConfig)
 DownloadCEF("${CEF_PLATFORM}" "${CEF_VERSION}" "${CMAKE_SOURCE_DIR}/third_party/cef")
 install(
-  DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/"
+  FILES "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/libcef.so"
   TYPE LIB
   CONFIGURATIONS Debug Release
-  FILES_MATCHING PATTERN "*.so"
-  PATTERN "swiftshader/*" EXCLUDE
 )
 install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/"
   DESTINATION "${CMAKE_INSTALL_BINDIR}"
   CONFIGURATIONS Debug Release
-  FILES_MATCHING PATTERN "*.bin" PATTERN "chrome-sandbox" PATTERN "swiftshader/*"
+  FILES_MATCHING PATTERN "chrome-sandbox" PATTERN "swiftshader/*" PATTERN "libEGL.so" PATTERN "libGLESv2.so" PATTERN "libvk_swiftshader.so" PATTERN "libvulkan.so.1"
+)
+install(
+  DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/$<CONFIG>/"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  CONFIGURATIONS Debug Release
+  FILES_MATCHING PATTERN "*.bin"
 )
 install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/third_party/cef/cef_binary_${CEF_VERSION}_${CEF_PLATFORM}/Resources/"
-  DESTINATION "${CMAKE_INSTALL_BINDIR}"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}"
   CONFIGURATIONS Debug Release
 )
 

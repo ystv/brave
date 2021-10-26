@@ -7,7 +7,7 @@ include_directories(${CEF_INCLUDE_PATH})
 include_directories(${CEF_PATH})
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror -Wall ")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -std=c++14")
 
 # Logical target used to link the libcef library.
 ADD_LOGICAL_TARGET("libcef_lib" "${CEF_LIB_DEBUG}" "${CEF_LIB_RELEASE}")

@@ -7,10 +7,10 @@ public:
 
   virtual void OnBeforeCommandLineProcessing(
       const CefString &process_type,
-      CefRefPtr<CefCommandLine> command_line) OVERRIDE;
+      CefRefPtr<CefCommandLine> command_line) override;
 
   virtual void OnRegisterCustomSchemes(
-    CefRawPtr<CefSchemeRegistrar> registrar) OVERRIDE;
+    CefRawPtr<CefSchemeRegistrar> registrar) override;
 
   IMPLEMENT_REFCOUNTING(BrowserApp);
 };
@@ -24,8 +24,8 @@ void BrowserApp::OnBeforeCommandLineProcessing(
   command_line->AppendSwitch("disable-gpu");
   command_line->AppendSwitch("disable-gpu-compositing");
   command_line->AppendSwitch("enable-begin-frame-scheduling");
-  command_line->AppendSwitch("enable-system-flash");
-  command_line->AppendSwitch("log-severity=disable");
+  command_line->AppendSwitch("enable-media-stream");
+  command_line->AppendSwitchWithValue("disable-gpu-vsync", "gpu");
 }
 
 void BrowserApp::OnRegisterCustomSchemes(

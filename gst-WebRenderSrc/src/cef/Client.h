@@ -1,6 +1,8 @@
 #ifndef CLIENT_H
 #define	CLIENT_H
 
+#include <functional>
+
 #include <gst/gstinfo.h>
 
 #include <include/cef_client.h>
@@ -12,13 +14,13 @@ class Client :
     public CefLifeSpanHandler
 {
 public:
+    typedef std::function<void(CefRect& rect)> GetRectCallback;
     class Listener {
     public: 
-        virtual bool GetViewRect(CefRect& rect) = 0;
         virtual void OnPaint(CefRenderHandler::PaintElementType type, const CefRenderHandler::RectList& rects, const void* buffer, int width, int height)  = 0;
     };
 public:
-    Client(Listener *listener);
+    Client(Listener *listener, GetRectCallback getRectCallback);
     virtual ~Client();
     
     //Overrride
@@ -31,12 +33,13 @@ public:
         return this;
     }
     
-    virtual bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
+    virtual void GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect) override;
     virtual void OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::PaintElementType type, const RectList& rects, const void* buffer, int width, int height) override;
 
     IMPLEMENT_REFCOUNTING(Client);
 private:
     Listener* listener;
+    GetRectCallback _getRectCallback;
 };
 
 #endif	/* CLIENT_H */

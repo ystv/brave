@@ -52,9 +52,8 @@ public:
         command_line->AppendSwitchWithValue("disable-gpu-vsync", "gpu");
     }
 
-    // CLient::Listner functions
+    // CLient::Listener functions
     //From client listener
-    virtual bool GetViewRect(CefRect& rect) override;
     virtual void OnPaint(CefRenderHandler::PaintElementType type, const CefRenderHandler::RectList& rects, const void* buffer, int width, int height) override;
 
     IMPLEMENT_REFCOUNTING(Browser);

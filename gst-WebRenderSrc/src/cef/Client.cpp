@@ -1,19 +1,17 @@
 #include "Client.h"
 
-Client::Client(Listener* listener)
-{ 
-    //Store
-    this->listener = listener;
+Client::Client(Listener* listener, GetRectCallback getRectCallback)
+    : listener(listener), _getRectCallback(getRectCallback)
+{
 }
 
 Client::~Client()
 {
 }
 
-bool Client::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
+void Client::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
-    //Call listener
-    return listener && listener->GetViewRect(rect);
+    this->_getRectCallback(rect);
 }
 
 void Client::OnPaint(CefRefPtr<CefBrowser>, CefRenderHandler::PaintElementType type, const RectList& rects, const void* buffer, int width, int height)
