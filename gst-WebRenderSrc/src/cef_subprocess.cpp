@@ -23,7 +23,6 @@ void BrowserApp::OnBeforeCommandLineProcessing(
 {
   command_line->AppendSwitch("disable-gpu");
   command_line->AppendSwitch("disable-gpu-compositing");
-  command_line->AppendSwitch("enable-begin-frame-scheduling");
   command_line->AppendSwitch("enable-media-stream");
   command_line->AppendSwitchWithValue("disable-gpu-vsync", "gpu");
 }

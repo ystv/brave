@@ -32,7 +32,7 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
 {
     //Check not already inited
     if (inited)
-        return -1000;
+        return 1;
 
     CefMainArgs main_args;
     CefRefPtr<Browser> app(this);
@@ -40,7 +40,7 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
     // CEF applications have multiple sub-processes (render, plugin, GPU, etc)
     // that share the same executable. This function checks the command-line and,
     // if this is a sub-process, executes the appropriate logic.
-    int exit_code = CefExecuteProcess(main_args, app.get(), NULL);
+    int exit_code = CefExecuteProcess(main_args, app, NULL);
 
     if (exit_code >= 0) 
         // The sub-process has completed so return here.
@@ -57,6 +57,9 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
     // it may reduce rendering performance on some systems.
     ///
     settings.windowless_rendering_enabled = true;
+
+    settings.multi_threaded_message_loop = false;
+    settings.external_message_pump = true;
 
     ///
     // Since we are using gstreamer as the main process we need to give our
@@ -76,7 +79,7 @@ int Browser::Init(void *webRenderSrc, void *push_frame)
     settings.log_severity = LOGSEVERITY_WARNING;
 
     // Initialize CEF for the browser process.
-    CefInitialize(main_args, settings, app.get(), NULL);
+    CefInitialize(main_args, settings, app, NULL);
 
     //I am inited
     inited = 1;
