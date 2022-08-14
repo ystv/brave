@@ -52,10 +52,10 @@ RUN apt-get update && \
     libnspr4-dev \
     libatk1.0-dev
 
-RUN cd brave/gst-WebRenderSrc && \
-    mkdir build && cd build && \
-    cmake -DCMAKE_INSTALL_PREFIX=/usr .. && \
-    make && make install
+# RUN cd brave/gst-WebRenderSrc && \
+#     mkdir build && cd build && \
+#     cmake -DCMAKE_INSTALL_PREFIX=/usr .. && \
+#     make && make install
 
 RUN cd brave && \
     pip3 install pipenv sanic && \
