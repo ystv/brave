@@ -64,4 +64,4 @@ RUN cd brave && \
 
 EXPOSE 5000
 WORKDIR /brave
-CMD ["pipenv", "run", "/brave/brave.py"]
+CMD ["pipenv", "run", "/brave/brave.py", "-c", "/brave/config/empty.yaml"]
