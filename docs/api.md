@@ -242,16 +242,16 @@ To switch (cut) a mixer to a different source. A source can be an input or anoth
 
 - Path: `/api/mixers/<id>/cut_to_source`
 - Method: `POST`
-- Request body: JSON containing a `source` value with the `uid` of the input/mixer to cut to. For example:
+- Request body: JSON containing a `uid` field with the `uid` value of the input/mixer to cut to. For example:
 
 ```
-{"source": "input1"}
+{"uid": "input1"}
 ```
 
 #### Command-line curl example
 ```
 # Change mixer 1 to that it's showing input 1
-curl -X POST -d '{"source": "input1"}' http://localhost:5000/api/mixers/1/cut_to_source
+curl -X POST -d '{"uid": "input1"}' http://localhost:5000/api/mixers/1/cut_to_source
 ```
 
 ### Overlay source
