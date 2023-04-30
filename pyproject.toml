@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "brave"
+version = "0.1.0"
+description = ""
+authors = ["rmil <rhys.milling@ystv.co.uk>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+PyYAML = "^6.0"
+sanic = {extras = ["ext"], version = "^23.3.0"}
+sanic-ext = "^23.3.0"
+websockets = "^11.0.2"
+pytest = "^7.3.1"
+Pillow = "^9.5.0"
+PyGObject = "^3.44.1"
+
+[tool.poetry.group.dev.dependencies]
+psutil = "^5.9.5"
+gobject = "^0.1.0"
+gbulb = "^0.6.4"
+vext = "^0.7.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

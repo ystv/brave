@@ -5,17 +5,17 @@ name = "pypi"
 
 [packages]
 pyyaml = "*"
-gbulb = "*"
 sanic = "*"
+sanic-ext = "*"
 websockets = "*"
 pytest = "*"
 pillow = "*"
 pygobject = "*"
-vext = "*"
 psutil = "*"
 gobject = "*"
+gbulb = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3"
+python_version = "3.8"

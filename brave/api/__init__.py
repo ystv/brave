@@ -5,6 +5,7 @@ logger = brave.helpers.get_logger('api')
 from sanic import Sanic
 import sanic.response
 from sanic.exceptions import NotFound, InvalidUsage
+from sanic_ext import Extend
 import brave.config as config
 import brave.api.websockets_handler
 import brave.api.route_handler
@@ -17,7 +18,7 @@ class RestApi(object):
     '''
 
     def __init__(self, session):
-        app = Sanic()
+        app = Sanic(name='brave')
         app.config.KEEP_ALIVE = False
         session.rest_api = self
         self.webockets_handler = brave.api.websockets_handler.WebsocketsHandler(session)
@@ -28,6 +29,8 @@ class RestApi(object):
         app.static('/style.css', './public/style.css', name='style.css')
         app.static('/js/', './public/js/')
         app.static('/output_images/', '/usr/local/share/brave/output_images/')
+        
+        Extend(app)
 
         @app.exception(NotFound)
         async def not_found(request, exception):
