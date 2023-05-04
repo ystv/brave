@@ -30,9 +30,9 @@ class RTMPOutput(Output):
         pipeline_string = 'flvmux name=mux streamable=true ! rtmpsink name=sink'
 
         if config.enable_video():
-            # key-int-max=60 puts a keyframe every 2 seconds (60 as 2*framerate)
+            # key-int-max=50 puts a keyframe every 2 seconds (50 as 2*framerate)
             pipeline_string += ' ' + self._video_pipeline_start() + \
-                'x264enc name=video_encoder key-int-max=60 ! h264parse ! queue ! mux.'
+                'x264enc name=video_encoder key-int-max=50 bitrate=45000 ! h264parse ! queue ! mux.'
 
         if config.enable_audio():
             pipeline_string += ' ' + self._audio_pipeline_start() + \
@@ -46,4 +46,4 @@ class RTMPOutput(Output):
     def create_caps_string(self):
         # framerate=30/1 because Facebook Live and YouTube live want this framerate.
         # profile=baseline may be superflous but some have recommended it for Facebook
-        return super().create_caps_string(format='I420') + ',framerate=30/1,profile=baseline'
+        return super().create_caps_string(format='I420') + ',framerate=50/1,profile=baseline'
