@@ -52,13 +52,13 @@ class WebRTCOutput(Output):
         pipeline_string = ''
         if config.enable_video():
 
-            video_caps = 'application/x-rtp,format=RGB,media=video,encoding-name=VP8,payload=97,width=%d,height=%d' % \
+            video_caps = 'application/x-rtp,format=RGB,media=video,encoding-name=H264,payload=97,width=%d,height=%d' % \
                 (self.width, self.height)
 
             # vp8enc has 'target-bitrate' which can be reduced from its default (256000)
             # Setting keyframe-max-dist lower reduces impact of packet loss on dodgy networks
             pipeline_string += (self._video_pipeline_start() +
-                                'vp8enc deadline=1 keyframe-max-dist=30 ! rtpvp8pay ! ' + video_caps +
+                                'nvh264enc preset=low-latency-hp ! rtp264pay ! ' + video_caps +
                                 ' ! tee name=webrtc_video_tee webrtc_video_tee. ! fakesink')
 
         if config.enable_audio():

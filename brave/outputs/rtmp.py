@@ -30,9 +30,8 @@ class RTMPOutput(Output):
         pipeline_string = 'flvmux name=mux streamable=true ! rtmpsink name=sink'
 
         if config.enable_video():
-            # key-int-max=50 puts a keyframe every 2 seconds (50 as 2*framerate)
             pipeline_string += ' ' + self._video_pipeline_start() + \
-                'x264enc name=video_encoder key-int-max=50 bitrate=45000 ! h264parse ! queue ! mux.'
+                'nvh264enc name=video_encoder preset=hq bitrate=45000 ! h264parse ! queue ! mux.'
 
         if config.enable_audio():
             pipeline_string += ' ' + self._audio_pipeline_start() + \

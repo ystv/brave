@@ -31,7 +31,7 @@ def setup_config(args):
 
 
 def check_gstreamer_plugins():
-    needed = ['opus', 'vpx', 'nice', 'webrtc', 'dtls', 'x264', 'srtp',
+    needed = ['opus', 'nice', 'webrtc', 'dtls', 'nvh264', 'srtp',
               'multifile', 'tcp', 'rtmp', 'rtpmanager', 'videotestsrc', 'audiotestsrc']
     missing = list(filter(lambda p: Gst.Registry.get().find_plugin(p) is None, needed))
     if len(missing):

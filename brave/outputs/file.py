@@ -28,7 +28,7 @@ class FileOutput(Output):
         pipeline_string = 'mp4mux name=mux ! filesink name=sink'
 
         if config.enable_video():
-            pipeline_string += ' ' + self._video_pipeline_start() + 'x264enc name=video_encoder ! queue ! mux.'
+            pipeline_string += ' ' + self._video_pipeline_start() + 'nvh264enc name=video_encoder ! queue ! mux.'
 
         if config.enable_audio():
             audio_pipeline_string = ('interaudiosrc name=interaudiosrc ! '

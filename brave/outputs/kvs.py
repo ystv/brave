@@ -36,7 +36,7 @@ class KvsOutput(Output):
         if not secret_key:
             raise brave.exceptions.InvalidConfiguration('Missing AWS_SECRET_ACCESS_KEY environment variable')
 
-        pipeline_string = (self._video_pipeline_start() + 'x264enc bframes=0 key-int-max=45 bitrate=500 ! '
+        pipeline_string = (self._video_pipeline_start() + 'nvh264enc bframes=0 key-int-max=45 bitrate=500 ! '
                            'video/x-h264,stream-format=avc,alignment=au ! kvssink name=kvssink')
 
         self.create_pipeline_from_string(pipeline_string)

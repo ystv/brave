@@ -11,7 +11,7 @@ RUN apt-get update && \
     build-essential \
     cmake \
     gcc \
-    git \ 
+    git \
     libffi7 libffi-dev \
     gobject-introspection \
     gstreamer1.0-libav \

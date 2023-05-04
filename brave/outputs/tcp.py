@@ -44,7 +44,7 @@ class TCPOutput(Output):
         Create the elements needed whether this is audio, video, or both
         '''
         mux_type = 'oggmux' if self.container == 'ogg' else 'mpegtsmux'
-        video_encoder_type = 'theoraenc' if self.container == 'ogg' else 'x264enc'
+        video_encoder_type = 'theoraenc' if self.container == 'ogg' else 'nvh264enc'
         audio_encoder_type = 'vorbisenc' if self.container == 'ogg' else 'avenc_ac3'
 
         pipeline_string = 'queue name=queue ! tcpserversink name=sink'
