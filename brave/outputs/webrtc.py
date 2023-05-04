@@ -100,7 +100,7 @@ class WebRTCOutput(Output):
 
         self.peers[ws] = {}
         self._update_current_num_peers()
-        await ws.send(json.dumps({'msg_type': 'webrtc-initialising', 'ice_servers': self._ice_servers()}))
+        await ws.send(json.dumps({'msg_type': 'webrtc-initialising', 'ice_servers': self._ice_servers(), 'source': self.source_uid}))
 
         self._create_webrtc_element_for_new_connection(ws)
 
