@@ -4,16 +4,14 @@ services:
   brave:
     image: pog
     #build: .
-    ports:
-      - "5000:5000"
+    network_mode: "host"
     restart: always
 
   caddy:
     image: caddy
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-    ports:
-      - "8443:8443"
+    network_mode: "host"
     depends_on:
       - brave
     restart: always

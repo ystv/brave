@@ -22,5 +22,5 @@
 
 localhost {
 	import cors *
-	reverse_proxy brave:5000
+	reverse_proxy localhost:5000
 }
