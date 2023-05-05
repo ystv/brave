@@ -1,4 +1,8 @@
-# Brave
+# Brave (HW-Accelerated)
+
+> This hardware accelerated fork has only been developed on Ubuntu 20.04 with a NVIDIA T4. See [install Ubuntu](docs/install_ubuntu.md) for instructions.
+
+
 ![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg "Python 3.6")
 [![license](https://img.shields.io/badge/license-Apache%202.0-yellowgreen.svg)](blob/master/LICENSE)
 

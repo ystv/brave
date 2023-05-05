@@ -29,21 +29,28 @@ sudo apt-get install -y \
     python3-pip
 ```
 
-### STEP 2: Python dependencies
-Brave uses [Pipenv](https://packaging.python.org/tutorials/managing-dependencies/#managing-dependencies) to manage an isolate its dependencies.
+## STEP 2: Gstreamer dependencies
+
+To use hardware acceleration we need to add the `nvenc` and `nvdec` plugins. Follow this [guide](https://lifestyletransfer.com/how-to-install-nvidia-gstreamer-plugins-nvenc-nvdec-on-ubuntu/) to install it.
+
+## STEP 3: Python dependencies
+Brave uses [Pyenv](https://github.com/pyenv/pyenv) and [Pipenv](https://packaging.python.org/tutorials/managing-dependencies/#managing-dependencies) to manage and isolate Python and its dependencies.
 
 Install with:
 
 ```
-pip3 install --user pipenv
+curl https://pyenv.run | bash
+pyenv install python 3.8.10
+pyenv global 3.8.10
+pip3 install -Iv pipenv==2022.4.8
 export PATH="${HOME}/.local/bin:$PATH"
-pipenv install
+pipenv install --ignore-pipfile
 ```
 
 If you're having difficulties, try this reference: https://xkcd.com/1987/. Gotta love Python.
 
 
-## STEP 3: Installing Brave
+## STEP 4: Installing Brave
 Simply clone Brave from GitHub, and try running it:
 
 ```
