@@ -58,7 +58,7 @@ class WebRTCOutput(Output):
             # vp8enc has 'target-bitrate' which can be reduced from its default (256000)
             # Setting keyframe-max-dist lower reduces impact of packet loss on dodgy networks
             pipeline_string += (self._video_pipeline_start() +
-                                'nvh264enc preset=low-latency-hp ! rtp264pay ! ' + video_caps +
+                                'nvh264enc preset=low-latency-hp ! rtph264pay ! ' + video_caps +
                                 ' ! tee name=webrtc_video_tee webrtc_video_tee. ! fakesink')
 
         if config.enable_audio():
@@ -100,7 +100,7 @@ class WebRTCOutput(Output):
 
         self.peers[ws] = {}
         self._update_current_num_peers()
-        await ws.send(json.dumps({'msg_type': 'webrtc-initialising', 'ice_servers': self._ice_servers(), 'source': self.source_uid}))
+        await ws.send(json.dumps({'msg_type': 'webrtc-initialising', 'ice_servers': self._ice_servers()}))
 
         self._create_webrtc_element_for_new_connection(ws)
 

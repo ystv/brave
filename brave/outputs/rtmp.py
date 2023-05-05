@@ -31,7 +31,7 @@ class RTMPOutput(Output):
 
         if config.enable_video():
             pipeline_string += ' ' + self._video_pipeline_start() + \
-                'nvh264enc name=video_encoder preset=hq bitrate=45000 ! h264parse ! queue ! mux.'
+                'nvh264enc name=video_encoder rc-mode=cbr bitrate=45000 ! h264parse ! queue ! mux.'
 
         if config.enable_audio():
             pipeline_string += ' ' + self._audio_pipeline_start() + \

@@ -12,7 +12,8 @@ RUN apt-get update && \
     cmake \
     gcc \
     git \
-    libffi7 libffi-dev \
+    libffi7 \
+    libffi-dev \
     gobject-introspection \
     gstreamer1.0-libav \
     gstreamer1.0-nice \
@@ -23,7 +24,7 @@ RUN apt-get update && \
     gstreamer1.0-tools \
     libgstreamer1.0-dev \
     libgstreamer-plugins-base1.0-dev \
-    gir1.2-gst-plugins-bad-1.0 \ 
+    gir1.2-gst-plugins-bad-1.0 \
     libcairo2-dev \
     libgirepository1.0-dev \
     pkg-config \

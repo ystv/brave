@@ -334,6 +334,11 @@ curl -X PUT -d '{"type": "file", "source": "mixer1", "location": "/tmp/file.mp4"
 }
 ```
 
+```sh
+curl -X PUT -d '{"type": "rtmp", "source": "input3", "uri": "rtmp://stream.ystv.co.uk/live/brave", "width": 1920, "height": 1080}' https://dev.mill.in.net/api/outputs
+```
+
+
 ### Update an output
 Update an existing output. The `id` (integer) of the output is required in the path.
 
